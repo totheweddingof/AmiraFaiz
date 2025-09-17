@@ -1,16 +1,6 @@
 /*============================================================================================
     # Wrapper Overlay
 ============================================================================================*/
-// document.getElementById("toggle-content").addEventListener("click", function () {
-//     // Hide the overlay
-//     const overlay = document.getElementById("overlay");
-//     overlay.style.display = "none";
-
-    // Play the audio
-//    const audioPlayer = document.getElementById("audio-player");
-//    audioPlayer.play();  // Start playing the audio
-// });
-
 document.getElementById("toggle-content").addEventListener("click", function () {
     var wrapper = document.querySelector(".wrapper"); // Change to wrapper
     var card = document.querySelector(".card");
@@ -30,16 +20,9 @@ document.getElementById("toggle-content").addEventListener("click", function () 
     audioPlayer.play();  // Start playing the audio
 });
 
-
-
-
-
-
-
 /** =====================================================
  *  Timer Countdown
   ======================================================= */
-
 function setupCountdown(campaignSelector, startTimeMillis, endTimeMillis) {
     var second = 1000;
     var minute = second * 60;
@@ -56,8 +39,7 @@ function setupCountdown(campaignSelector, startTimeMillis, endTimeMillis) {
 
     function countdown() {
         var gap = calculateRemaining();
-        var shouldRefresh = previousGap > day && gap <= day || previousGap > 0 && gap === 0;
-
+        var shouldRefresh = (previousGap > day && gap <= day) || (previousGap > 0 && gap === 0);
         previousGap = gap;
 
         var textDay = Math.floor(gap / day);
@@ -84,15 +66,12 @@ function setupCountdown(campaignSelector, startTimeMillis, endTimeMillis) {
     setInterval(countdown, 1000);
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    if (!document.querySelectorAll || !document.body.classList) {
-        return;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    const now = new Date().getTime(); // Current time
+    const end = new Date("2025-10-25T00:00:00+08:00").getTime(); // 29 Nov 2025, 12AM MYT
 
+    setupCountdown(".campaign-0", now, end);
 });
-
-setupCountdown(".campaign-0", new Date().getMilliseconds(), 1924920000000);
-
 
 
 
@@ -100,12 +79,21 @@ setupCountdown(".campaign-0", new Date().getMilliseconds(), 1924920000000);
 /** =====================================================
  *  Add to Calendar
   ======================================================= */
+const now = new Date();
+
+// Format current date to UTC format: YYYYMMDDTHHmmssZ
+const pad = (num) => num.toString().padStart(2, '0');
+const startDate = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
+
+// Set a fixed end date: 29 November 2025 at 9:00 AM UTC
+const endDate = "20251025T090000Z";
+
 const event = {
-    title: "Jemputan Kenduri Kahwin John & Sarah",
-    startDate: "99991231T033000Z", // YYYYMMDDTHHmmssZ (UTC)
-    endDate: "99991231T090000Z",
-    location: "10A Jalan Seri Ampang 2, Kampung Pisang, 47300 Subang, Selangor, Malaysia",
-    description: "Kami menjemput tuan/puan hadir ke majlis perkahwinan anakanda kami.",
+    title: "Jemputan Majlis Perkahwinan Amira & Faiz",
+    startDate: startDate,
+    endDate: endDate,
+    location: "Kampung Jeransang, Benta 27310 Kuala Lipis Pahang",
+    description: "Majlis perkahwinan Nur Amira dan Faiz Izudin.",
 };
 
 // Function to generate Google Calendar URL
@@ -165,23 +153,20 @@ function addAppleCalendar() {
 }
 
 
-
-
-
 /** =====================================================
  *  Location for Google and Waze
   ======================================================= */
 function openGoogleMaps() {
-    const latitude = 3.1575;  // Example latitude
-    const longitude = 101.7116;  // Example longitude
+    const latitude = 3.9995716053758468;  // Example latitude
+    const longitude = 102.08525848178311;  // Example longitude
     const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&travelmode=driving`;
 
     window.open(googleMapsUrl, "_blank");  // Open in a new tab
 }
 
 function openWaze() {
-    const latitude = 3.1575;  // Example latitude
-    const longitude = 101.7116;  // Example longitude
+    const latitude = 3.9995716053758468;  // Example latitude
+    const longitude = 102.08525848178311;  // Example longitude
     //const wazeUrl = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
     const wazeUrl = `waze://?ll=${latitude},${longitude}&navigate=yes`
 
